@@ -13,6 +13,7 @@ local defaults = {
 	iconSize = 32,
 	spacing = 4,
 	showLabels = true,
+	vertical = false,
 	point = { "CENTER", "CENTER", 0, 120 },
 	combos = {},
 }
@@ -108,6 +109,12 @@ function PCT:ToggleLock()
 	self:Update()
 end
 
+function PCT:ToggleVertical()
+	self.db.vertical = not self.db.vertical
+	self:Print(self.db.vertical and "Senkrechte Anordnung." or "Waagerechte Anordnung.")
+	self:Update()
+end
+
 function PCT:Toggle()
 	if not self.Display or not self.Display.frame then return end
 	self.Display.frame:SetShown(not self.Display.frame:IsShown())
@@ -153,10 +160,12 @@ SlashCmdList.PUFFICOMBOTRACKER = function(input)
 		PCT.Editor:Toggle()
 	elseif cmd == "lock" or cmd == "unlock" then
 		PCT:ToggleLock()
+	elseif cmd == "vertical" or cmd == "senkrecht" then
+		PCT:ToggleVertical()
 	elseif cmd == "reset" then
 		PCT:ResetPosition()
 	elseif cmd == "help" then
-		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct reset (Position).")
+		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct vertical (Anordnung), /pct reset (Position).")
 	else
 		PCT:Toggle()
 	end

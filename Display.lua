@@ -5,7 +5,7 @@ PCT.Display = Display
 
 local PADDING = 10
 local TITLE_HEIGHT = 26
-local ROW_GAP = 8
+local GROUP_GAP = 8
 local LABEL_HEIGHT = 14
 
 function Display:Create()
@@ -83,38 +83,63 @@ function Display:Refresh()
 
 	local db = PCT.db
 	local size, spacing = db.iconSize, db.spacing
+	local vertical = db.vertical and true or false
 	local labelHeight = db.showLabels and LABEL_HEIGHT or 0
-	local y = -TITLE_HEIGHT
-	local contentWidth = f.title:GetStringWidth() + 26
+
+	-- Waagerecht: jede Kombo eine Zeile, Kombos untereinander.
+	-- Senkrecht: jede Kombo eine Spalte, Kombos nebeneinander.
+	local x, y = PADDING, -TITLE_HEIGHT
+	local sumWidth, sumHeight = 0, 0
+	local maxWidth, maxHeight = 0, 0
 
 	for index, combo in ipairs(db.combos) do
-		local row = self:AcquireRow(index)
-		row:ClearAllPoints()
-		row:SetPoint("TOPLEFT", f, "TOPLEFT", PADDING, y)
+		local group = self:AcquireRow(index)
+		group:ClearAllPoints()
+		group:SetPoint("TOPLEFT", f, "TOPLEFT", x, y)
 
-		row.label:SetText(combo.name or "")
-		row.label:SetShown(db.showLabels)
+		group.label:SetText(combo.name or "")
+		group.label:SetShown(db.showLabels)
 
 		for slot = 1, combo.slots do
-			local btn = row.slots[slot] or PCT.CreateSlotButton(row)
-			row.slots[slot] = btn
+			local btn = group.slots[slot] or PCT.CreateSlotButton(group)
+			group.slots[slot] = btn
 			btn.comboIndex, btn.slotIndex = index, slot
 			btn:ClearAllPoints()
-			btn:SetPoint("TOPLEFT", row, "TOPLEFT", (slot - 1) * (size + spacing), -labelHeight)
+			if vertical then
+				btn:SetPoint("TOPLEFT", group, "TOPLEFT", 0, -labelHeight - (slot - 1) * (size + spacing))
+			else
+				btn:SetPoint("TOPLEFT", group, "TOPLEFT", (slot - 1) * (size + spacing), -labelHeight)
+			end
 			PCT.UpdateSlotButton(btn, combo.spells[slot], size)
 			btn:Show()
 		end
-		for slot = combo.slots + 1, #row.slots do
-			row.slots[slot]:Hide()
+		for slot = combo.slots + 1, #group.slots do
+			group.slots[slot]:Hide()
 		end
 
-		local rowWidth = combo.slots * (size + spacing) - spacing
-		local rowHeight = labelHeight + size
-		row:SetSize(rowWidth, rowHeight)
-		row:Show()
+		local labelWidth = db.showLabels and group.label:GetStringWidth() or 0
+		local strip = combo.slots * (size + spacing) - spacing
+		local width, height
+		if vertical then
+			width = math.max(size, labelWidth)
+			height = labelHeight + strip
+		else
+			width = math.max(strip, labelWidth)
+			height = labelHeight + size
+		end
+		group:SetSize(width, height)
+		group:Show()
 
-		contentWidth = math.max(contentWidth, rowWidth, db.showLabels and row.label:GetStringWidth() or 0)
-		y = y - rowHeight - ROW_GAP
+		sumWidth = sumWidth + width + GROUP_GAP
+		sumHeight = sumHeight + height + GROUP_GAP
+		maxWidth = math.max(maxWidth, width)
+		maxHeight = math.max(maxHeight, height)
+
+		if vertical then
+			x = x + width + GROUP_GAP
+		else
+			y = y - height - GROUP_GAP
+		end
 	end
 
 	for index = #db.combos + 1, #self.rows do
@@ -125,7 +150,10 @@ function Display:Refresh()
 	f.hint:SetShown(not hasCombos)
 
 	if hasCombos then
-		f:SetSize(contentWidth + PADDING * 2, -y - ROW_GAP + PADDING)
+		local contentWidth = vertical and (sumWidth - GROUP_GAP) or maxWidth
+		local contentHeight = vertical and maxHeight or (sumHeight - GROUP_GAP)
+		contentWidth = math.max(contentWidth, f.title:GetStringWidth() + 26)
+		f:SetSize(contentWidth + PADDING * 2, TITLE_HEIGHT + contentHeight + PADDING)
 	else
 		f:SetSize(240, TITLE_HEIGHT + 40)
 	end

@@ -14,6 +14,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 - Zauber per Drag & Drop aus Zauberbuch oder Aktionsleiste auf einen Platz ziehen
 - Kombos umbenennen, umsortieren und löschen
 - Übersichtsfenster frei verschiebbar, sperrbar, Icon-Größe einstellbar
+- Anordnung waagerecht (Kombo als Zeile) oder senkrecht (Kombo als Spalte)
 - Einstellungen und Kombos werden pro Charakter gespeichert
 - Keine Abhängigkeiten (kein Ace3, keine Libs)
 
@@ -32,6 +33,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 | `/pct` | Übersichtsfenster ein-/ausblenden |
 | `/pct config` | Kombo-Editor öffnen |
 | `/pct lock` | Fenster sperren/entsperren |
+| `/pct vertical` | Zwischen waagerechter und senkrechter Anordnung wechseln |
 | `/pct reset` | Fensterposition zurücksetzen |
 | `/pct help` | Befehlsübersicht |
 

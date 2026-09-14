@@ -58,6 +58,11 @@ function Editor:Create()
 		PCT:UpdateDisplay()
 	end)
 
+	self.verticalCheck = CreateCheckbox(f, "Senkrecht anordnen", 12, -58, function(checked)
+		PCT.db.vertical = checked
+		PCT:UpdateDisplay()
+	end)
+
 	local slider = CreateFrame("Slider", "PuffiComboTrackerSizeSlider", f, "OptionsSliderTemplate")
 	slider:SetWidth(120)
 	slider:SetPoint("TOPRIGHT", -24, -44)
@@ -82,18 +87,18 @@ function Editor:Create()
 
 	local addButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
 	addButton:SetSize(120, 22)
-	addButton:SetPoint("TOPLEFT", 14, -66)
+	addButton:SetPoint("TOPLEFT", 14, -84)
 	addButton:SetText("Neue Kombo")
 	addButton:SetScript("OnClick", function() PCT:AddCombo() end)
 
 	f.hint = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-	f.hint:SetPoint("TOPLEFT", 140, -70)
+	f.hint:SetPoint("TOPLEFT", 140, -88)
 	f.hint:SetWidth(300)
 	f.hint:SetJustifyH("LEFT")
 	f.hint:SetText("Zauber aus Zauberbuch oder Aktionsleiste auf einen Platz ziehen.\nRechtsklick leert einen Platz.")
 
 	local scroll = CreateFrame("ScrollFrame", "PuffiComboTrackerEditorScroll", f, "UIPanelScrollFrameTemplate")
-	scroll:SetPoint("TOPLEFT", 14, -100)
+	scroll:SetPoint("TOPLEFT", 14, -118)
 	scroll:SetPoint("BOTTOMRIGHT", -34, 14)
 
 	local child = CreateFrame("Frame", nil, scroll)
@@ -179,6 +184,7 @@ function Editor:Refresh()
 	local db = PCT.db
 	self.lockCheck:SetChecked(db.locked)
 	self.labelCheck:SetChecked(db.showLabels)
+	self.verticalCheck:SetChecked(db.vertical)
 	self.sizeSlider:SetValue(db.iconSize)
 	if self.sizeSlider.valueText then
 		self.sizeSlider.valueText:SetText("Icon-Größe: " .. db.iconSize)
