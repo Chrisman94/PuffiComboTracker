@@ -11,7 +11,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 ## Funktionen
 
 - Beliebig viele benannte Kombos mit je 1–10 Plätzen
-- Zauber per Drag & Drop aus Zauberbuch oder Aktionsleiste auf einen Platz ziehen
+- Zauber per Drag & Drop aus Zauberbuch oder Aktionsleiste in den Editor ziehen
 - Kombos umbenennen, umsortieren und löschen
 - Übersichtsfenster frei verschiebbar, sperrbar, Icon-Größe einstellbar
 - Anordnung waagerecht (Kombo als Zeile) oder senkrecht (Kombo als Spalte)
@@ -40,10 +40,13 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 Der Editor ist auch per Rechtsklick auf das Übersichtsfenster oder über das
 Addon-Menü (Zahnrad-Symbol an der Minimap) erreichbar.
 
-**Zauber zuweisen:** Zauberbuch öffnen, Zauber auf einen leeren Platz ziehen.
-Rechtsklick auf einen Platz leert ihn. Ein Zauber lässt sich aus einem Platz
-herausziehen, um ihn woanders abzulegen. Ist das Fenster gesperrt, sind alle
-Plätze schreibgeschützt und reagieren nur noch mit Tooltip.
+**Zauber zuweisen:** passiert ausschließlich im Editor. Zauberbuch öffnen,
+Zauber auf einen leeren Platz ziehen. Rechtsklick auf einen Platz leert ihn, und
+ein Zauber lässt sich aus einem Platz herausziehen, um ihn woanders abzulegen.
+
+Das Übersichtsfenster ist reines Anzeigefenster: es nimmt keine Zauber an, leere
+Plätze bleiben dort ohne Platzhalter, und Tooltips gibt es nur für belegte
+Plätze. `/pct lock` verhindert lediglich das Verschieben des Fensters.
 
 ## Dateien
 

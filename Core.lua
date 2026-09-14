@@ -105,7 +105,7 @@ end
 
 function PCT:ToggleLock()
 	self.db.locked = not self.db.locked
-	self:Print(self.db.locked and "Fenster gesperrt." or "Fenster entsperrt – Zauber können jetzt zugewiesen werden.")
+	self:Print(self.db.locked and "Fenster gesperrt – nicht verschiebbar." or "Fenster entsperrt – verschiebbar.")
 	self:Update()
 end
 

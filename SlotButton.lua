@@ -44,7 +44,7 @@ function PCT.GetCursorSpellID()
 end
 
 function PCT.TryAssignFromCursor(btn)
-	if PCT.db.locked then return false end
+	if not btn.editable then return false end
 	local spellID = PCT.GetCursorSpellID()
 	if not spellID then return false end
 	PCT:SetSlot(btn.comboIndex, btn.slotIndex, spellID)
@@ -60,8 +60,11 @@ local function PickupSpell(spellID)
 	end
 end
 
-function PCT.CreateSlotButton(parent)
+-- editable = true nur im Editor; im Anzeigefenster sind die Plätze
+-- schreibgeschützt und zeigen keine Platzhalter.
+function PCT.CreateSlotButton(parent, editable)
 	local btn = CreateFrame("Button", nil, parent)
+	btn.editable = editable and true or false
 	btn:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 	btn:RegisterForDrag("LeftButton")
 
@@ -78,20 +81,24 @@ function PCT.CreateSlotButton(parent)
 	btn.plus:SetPoint("CENTER")
 	btn.plus:SetText("+")
 	btn.plus:SetTextColor(0.55, 0.55, 0.55)
+	btn.plus:Hide()
 
-	btn.highlight = btn:CreateTexture(nil, "HIGHLIGHT")
-	btn.highlight:SetAllPoints()
-	btn.highlight:SetColorTexture(1, 1, 1, 0.12)
+	if btn.editable then
+		btn.highlight = btn:CreateTexture(nil, "HIGHLIGHT")
+		btn.highlight:SetAllPoints()
+		btn.highlight:SetColorTexture(1, 1, 1, 0.12)
+	end
 
 	btn:SetScript("OnEnter", function(self)
+		if not self.spellID and not self.editable then return end
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		if self.spellID then
 			GameTooltip:SetSpellByID(self.spellID)
-			if not PCT.db.locked then
+			if self.editable then
 				GameTooltip:AddLine("Rechtsklick: Platz leeren", 0.6, 0.6, 0.6)
 			end
 		else
-			GameTooltip:SetText(PCT.db.locked and "Leerer Platz" or "Zauber hierher ziehen", 1, 1, 1)
+			GameTooltip:SetText("Zauber hierher ziehen", 1, 1, 1)
 		end
 		GameTooltip:Show()
 	end)
@@ -100,26 +107,26 @@ function PCT.CreateSlotButton(parent)
 		GameTooltip:Hide()
 	end)
 
-	btn:SetScript("OnReceiveDrag", function(self)
-		PCT.TryAssignFromCursor(self)
-	end)
+	if btn.editable then
+		btn:SetScript("OnReceiveDrag", function(self)
+			PCT.TryAssignFromCursor(self)
+		end)
 
-	btn:SetScript("OnClick", function(self, button)
-		if button == "RightButton" then
-			if not PCT.db.locked then
+		btn:SetScript("OnClick", function(self, button)
+			if button == "RightButton" then
 				PCT:SetSlot(self.comboIndex, self.slotIndex, nil)
+				return
 			end
-			return
-		end
-		PCT.TryAssignFromCursor(self)
-	end)
+			PCT.TryAssignFromCursor(self)
+		end)
 
-	-- Zauber aus einem Platz herausziehen (zum Umsortieren).
-	btn:SetScript("OnDragStart", function(self)
-		if PCT.db.locked or not self.spellID then return end
-		PickupSpell(self.spellID)
-		PCT:SetSlot(self.comboIndex, self.slotIndex, nil)
-	end)
+		-- Zauber aus einem Platz herausziehen (zum Umsortieren).
+		btn:SetScript("OnDragStart", function(self)
+			if not self.spellID then return end
+			PickupSpell(self.spellID)
+			PCT:SetSlot(self.comboIndex, self.slotIndex, nil)
+		end)
+	end
 
 	return btn
 end
@@ -134,6 +141,6 @@ function PCT.UpdateSlotButton(btn, spellID, size)
 		btn.plus:Hide()
 	else
 		btn.icon:SetColorTexture(0.12, 0.12, 0.12, 0.9)
-		btn.plus:SetShown(not PCT.db.locked)
+		btn.plus:SetShown(btn.editable)
 	end
 end

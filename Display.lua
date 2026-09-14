@@ -101,7 +101,7 @@ function Display:Refresh()
 		group.label:SetShown(db.showLabels)
 
 		for slot = 1, combo.slots do
-			local btn = group.slots[slot] or PCT.CreateSlotButton(group)
+			local btn = group.slots[slot] or PCT.CreateSlotButton(group, false)
 			group.slots[slot] = btn
 			btn.comboIndex, btn.slotIndex = index, slot
 			btn:ClearAllPoints()

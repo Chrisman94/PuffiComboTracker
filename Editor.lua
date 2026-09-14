@@ -207,7 +207,7 @@ function Editor:Refresh()
 		entry.down:SetEnabled(index < #db.combos)
 
 		for slot = 1, combo.slots do
-			local btn = entry.slots[slot] or PCT.CreateSlotButton(entry)
+			local btn = entry.slots[slot] or PCT.CreateSlotButton(entry, true)
 			entry.slots[slot] = btn
 			btn.comboIndex, btn.slotIndex = index, slot
 			btn:ClearAllPoints()
