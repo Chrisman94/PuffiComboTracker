@@ -2,7 +2,7 @@
 ## Title: Puffi Combo Tracker
 ## Notes: Eigene Fähigkeiten-Kombos zusammenstellen und als kompakte Übersicht anzeigen.
 ## Author: Chris
-## Version: 0.3.0
+## Version: 0.4.0
 ## SavedVariablesPerCharacter: PuffiComboTrackerDB
 ## IconTexture: Interface\Icons\Ability_Monk_Serpentstatue
 ## AddonCompartmentFunc: PuffiComboTracker_OnAddonCompartmentClick

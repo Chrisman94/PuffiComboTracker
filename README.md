@@ -15,6 +15,8 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 - Kombos umbenennen, umsortieren und löschen
 - Übersichtsfenster frei verschiebbar, sperrbar, Icon-Größe einstellbar
 - Anordnung waagerecht (Kombo als Zeile) oder senkrecht (Kombo als Spalte)
+- Modus "Nur Icons": ohne Fensterrahmen, Titel und Schließen-Button
+- Nicht belegte Plätze werden im Anzeigefenster ausgeblendet
 - Einstellungen und Kombos werden pro Charakter gespeichert
 - Keine Abhängigkeiten (kein Ace3, keine Libs)
 
@@ -34,6 +36,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 | `/pct config` | Kombo-Editor öffnen |
 | `/pct lock` | Fenster sperren/entsperren |
 | `/pct vertical` | Zwischen waagerechter und senkrechter Anordnung wechseln |
+| `/pct plain` | Fensterrahmen aus-/einschalten (nur Icons) |
 | `/pct reset` | Fensterposition zurücksetzen |
 | `/pct help` | Befehlsübersicht |
 
@@ -44,9 +47,15 @@ Addon-Menü (Zahnrad-Symbol an der Minimap) erreichbar.
 Zauber auf einen leeren Platz ziehen. Rechtsklick auf einen Platz leert ihn, und
 ein Zauber lässt sich aus einem Platz herausziehen, um ihn woanders abzulegen.
 
-Das Übersichtsfenster ist reines Anzeigefenster: es nimmt keine Zauber an, leere
-Plätze bleiben dort ohne Platzhalter, und Tooltips gibt es nur für belegte
-Plätze. `/pct lock` verhindert lediglich das Verschieben des Fensters.
+Das Übersichtsfenster ist reines Anzeigefenster: es nimmt keine Zauber an, und
+nicht belegte Plätze werden dort gar nicht gezeichnet – eine Kombo mit fünf
+Plätzen und drei Zaubern ist also drei Icons lang. `/pct lock` verhindert
+lediglich das Verschieben des Fensters.
+
+Im Modus "Nur Icons" verschwinden Rahmen, Hintergrund, Titel und Schließen-Button;
+übrig bleiben die Icons (und, falls eingeschaltet, die Kombonamen). Ist das
+Fenster dabei gesperrt, nimmt die unsichtbare Fläche keine Mausklicks mehr an –
+zum Verschieben also erst `/pct lock`, und ausblenden dann über `/pct`.
 
 ## Dateien
 

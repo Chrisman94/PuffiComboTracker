@@ -63,6 +63,11 @@ function Editor:Create()
 		PCT:UpdateDisplay()
 	end)
 
+	self.plainCheck = CreateCheckbox(f, "Nur Icons", 170, -58, function(checked)
+		PCT.db.plain = checked
+		PCT:UpdateDisplay()
+	end)
+
 	local slider = CreateFrame("Slider", "PuffiComboTrackerSizeSlider", f, "OptionsSliderTemplate")
 	slider:SetWidth(120)
 	slider:SetPoint("TOPRIGHT", -24, -44)
@@ -185,6 +190,7 @@ function Editor:Refresh()
 	self.lockCheck:SetChecked(db.locked)
 	self.labelCheck:SetChecked(db.showLabels)
 	self.verticalCheck:SetChecked(db.vertical)
+	self.plainCheck:SetChecked(db.plain)
 	self.sizeSlider:SetValue(db.iconSize)
 	if self.sizeSlider.valueText then
 		self.sizeSlider.valueText:SetText("Icon-Größe: " .. db.iconSize)
