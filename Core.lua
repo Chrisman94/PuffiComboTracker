@@ -14,6 +14,7 @@ local defaults = {
 	iconSize = 32,
 	spacing = 4,
 	showLabels = true,
+	showBinds = true,
 	vertical = false,
 	plain = false,
 	point = { "CENTER", "CENTER", 0, 120 },
@@ -134,6 +135,12 @@ function PCT:ToggleAlwaysShow()
 	self:Update()
 end
 
+function PCT:ToggleBinds()
+	self.db.showBinds = not self.db.showBinds
+	self:Print(self.db.showBinds and "Tastenbelegung wird angezeigt." or "Tastenbelegung ausgeblendet.")
+	self:Update()
+end
+
 function PCT:Toggle()
 	if not self.Display or not self.Display.frame then return end
 	if self.db.alwaysShow then
@@ -189,10 +196,12 @@ SlashCmdList.PUFFICOMBOTRACKER = function(input)
 		PCT:TogglePlain()
 	elseif cmd == "always" or cmd == "immer" then
 		PCT:ToggleAlwaysShow()
+	elseif cmd == "keys" or cmd == "tasten" then
+		PCT:ToggleBinds()
 	elseif cmd == "reset" then
 		PCT:ResetPosition()
 	elseif cmd == "help" then
-		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct vertical (Anordnung), /pct plain (Rahmen an/aus), /pct always (immer anzeigen), /pct reset (Position).")
+		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct vertical (Anordnung), /pct plain (Rahmen an/aus), /pct always (immer anzeigen), /pct keys (Tastenbelegung), /pct reset (Position).")
 	else
 		PCT:Toggle()
 	end

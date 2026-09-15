@@ -17,6 +17,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 - Anordnung waagerecht (Kombo als Zeile) oder senkrecht (Kombo als Spalte)
 - Modus "Nur Icons": ohne Fensterrahmen, Titel und Schließen-Button
 - Option "Immer anzeigen": das Fenster bleibt dauerhaft sichtbar
+- Tastenbelegung auf den Icons, sofern der Zauber auf einer Aktionsleiste liegt
 - Nicht belegte Plätze werden im Anzeigefenster ausgeblendet
 - Einstellungen und Kombos werden pro Charakter gespeichert
 - Keine Abhängigkeiten (kein Ace3, keine Libs)
@@ -44,6 +45,7 @@ direkt das Repo kopiert, sieht in der Addon-Liste als Version den Platzhalter
 | `/pct vertical` | Zwischen waagerechter und senkrechter Anordnung wechseln |
 | `/pct plain` | Fensterrahmen aus-/einschalten (nur Icons) |
 | `/pct always` | Fenster dauerhaft sichtbar halten (an/aus) |
+| `/pct keys` | Tastenbelegung auf den Icons ein-/ausblenden |
 | `/pct reset` | Fensterposition zurücksetzen |
 | `/pct help` | Befehlsübersicht |
 
@@ -58,6 +60,19 @@ Das Übersichtsfenster ist reines Anzeigefenster: es nimmt keine Zauber an, und
 nicht belegte Plätze werden dort gar nicht gezeichnet – eine Kombo mit fünf
 Plätzen und drei Zaubern ist also drei Icons lang. `/pct lock` verhindert
 lediglich das Verschieben des Fensters.
+
+**Tastenbelegung:** liegt ein Zauber der Kombo auf einer Aktionsleiste, steht
+die zugehörige Taste in der Ecke des Icons. Der Text kommt direkt von den
+Leisten-Knöpfen, ist also identisch mit dem, was dort steht, und aktualisiert
+sich beim Umlegen von Tasten, beim Blättern der Leiste und beim Gestaltwechsel.
+Ersetzt ein Talent den Zauber durch eine andere Fähigkeit, wird auch deren Platz
+auf der Leiste berücksichtigt.
+
+Ausgelesen werden die Standardleisten von WoW (Hauptleiste und die sieben
+weiteren Leisten). Wer seine Leisten komplett durch ein Addon wie Bartender4
+oder ElvUI ersetzt hat, bekommt keine Tasten angezeigt – diese Addons verwalten
+eigene Tastenbelegungen, die das Spiel nicht in den Standard-Knöpfen ablegt.
+Abschalten lässt sich die Anzeige per Checkbox im Editor oder `/pct keys`.
 
 Mit "Immer anzeigen" lässt sich das Übersichtsfenster nicht mehr versehentlich
 schließen: der Schließen-Button verschwindet, ESC und `/pct` blenden es nicht
@@ -75,6 +90,7 @@ zum Verschieben also erst `/pct lock`, und ausblenden dann über `/pct`.
 | --- | --- |
 | `Core.lua` | SavedVariables, Kombo-Verwaltung, Slash-Befehle |
 | `SlotButton.lua` | Icon-Platz als Widget, Cursor-/Zauber-Erkennung |
+| `Bindings.lua` | Tastenbelegung aus den Aktionsleisten auslesen |
 | `Display.lua` | Übersichtsfenster |
 | `Editor.lua` | Konfigurationsfenster |
 

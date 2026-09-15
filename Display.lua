@@ -125,6 +125,7 @@ function Display:Refresh()
 	local vertical = db.vertical and true or false
 	local plain = db.plain and true or false
 	local labelHeight = db.showLabels and LABEL_HEIGHT or 0
+	local showBinds = db.showBinds and true or false
 	local padding = plain and 0 or PADDING
 	local top = plain and 0 or TITLE_HEIGHT
 
@@ -155,7 +156,7 @@ function Display:Refresh()
 				else
 					btn:SetPoint("TOPLEFT", group, "TOPLEFT", (filled - 1) * (size + spacing), -labelHeight)
 				end
-				PCT.UpdateSlotButton(btn, spellID, size)
+				PCT.UpdateSlotButton(btn, spellID, size, showBinds and PCT.GetHotkey(spellID) or nil)
 				btn:Show()
 			end
 		end

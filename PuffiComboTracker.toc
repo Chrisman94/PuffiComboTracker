@@ -10,5 +10,6 @@
 
 Core.lua
 SlotButton.lua
+Bindings.lua
 Display.lua
 Editor.lua

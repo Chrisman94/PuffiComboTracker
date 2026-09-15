@@ -76,6 +76,11 @@ function Editor:Create()
 		PCT:UpdateDisplay()
 	end)
 
+	self.bindCheck = CreateCheckbox(f, "Tasten anzeigen", 170, -84, function(checked)
+		PCT.db.showBinds = checked
+		PCT:UpdateDisplay()
+	end)
+
 	local slider = CreateFrame("Slider", "PuffiComboTrackerSizeSlider", f, "OptionsSliderTemplate")
 	slider:SetWidth(120)
 	slider:SetPoint("TOPRIGHT", -24, -44)
@@ -200,6 +205,7 @@ function Editor:Refresh()
 	self.verticalCheck:SetChecked(db.vertical)
 	self.plainCheck:SetChecked(db.plain)
 	self.alwaysCheck:SetChecked(db.alwaysShow)
+	self.bindCheck:SetChecked(db.showBinds)
 	self.sizeSlider:SetValue(db.iconSize)
 	if self.sizeSlider.valueText then
 		self.sizeSlider.valueText:SetText("Icon-Größe: " .. db.iconSize)

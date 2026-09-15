@@ -77,6 +77,15 @@ function PCT.CreateSlotButton(parent, editable)
 	btn.icon:SetPoint("BOTTOMRIGHT", -1, 1)
 	btn.icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
 
+	-- Tastenbelegung in der oberen Ecke; Schatten statt Umriss-Font,
+	-- damit der Text auch auf hellen Icons lesbar bleibt.
+	btn.hotkey = btn:CreateFontString(nil, "OVERLAY", "NumberFontNormalSmall")
+	btn.hotkey:SetPoint("TOPRIGHT", -1, -2)
+	btn.hotkey:SetJustifyH("RIGHT")
+	btn.hotkey:SetShadowColor(0, 0, 0, 1)
+	btn.hotkey:SetShadowOffset(1, -1)
+	btn.hotkey:Hide()
+
 	btn.plus = btn:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 	btn.plus:SetPoint("CENTER")
 	btn.plus:SetText("+")
@@ -131,7 +140,7 @@ function PCT.CreateSlotButton(parent, editable)
 	return btn
 end
 
-function PCT.UpdateSlotButton(btn, spellID, size)
+function PCT.UpdateSlotButton(btn, spellID, size, hotkey)
 	btn:SetSize(size, size)
 	local name, icon = PCT.GetSpellData(spellID)
 	btn.spellID = name and spellID or nil
@@ -142,5 +151,12 @@ function PCT.UpdateSlotButton(btn, spellID, size)
 	else
 		btn.icon:SetColorTexture(0.12, 0.12, 0.12, 0.9)
 		btn.plus:SetShown(btn.editable)
+	end
+
+	if btn.spellID and hotkey and hotkey ~= "" then
+		btn.hotkey:SetText(hotkey)
+		btn.hotkey:Show()
+	else
+		btn.hotkey:Hide()
 	end
 end
