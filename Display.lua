@@ -8,6 +8,18 @@ local TITLE_HEIGHT = 26
 local GROUP_GAP = 8
 local LABEL_HEIGHT = 14
 
+-- ESC schließt das Fenster nur, solange es ausgeblendet werden darf.
+local function SetEscapeClose(enabled)
+	for i = #UISpecialFrames, 1, -1 do
+		if UISpecialFrames[i] == "PuffiComboTrackerFrame" then
+			tremove(UISpecialFrames, i)
+		end
+	end
+	if enabled then
+		tinsert(UISpecialFrames, "PuffiComboTrackerFrame")
+	end
+end
+
 local BACKDROP = {
 	bgFile = "Interface\\Buttons\\WHITE8X8",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -40,7 +52,13 @@ function Display:Create()
 		end
 	end)
 	f:SetScript("OnShow", function() PCT.db.shown = true end)
-	f:SetScript("OnHide", function() PCT.db.shown = false end)
+	f:SetScript("OnHide", function(self)
+		if PCT.db.alwaysShow then
+			self:Show()
+			return
+		end
+		PCT.db.shown = false
+	end)
 
 	f.title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	f.title:SetPoint("TOPLEFT", PADDING, -8)
@@ -55,8 +73,6 @@ function Display:Create()
 	f.hint:SetWidth(210)
 	f.hint:SetJustifyH("LEFT")
 
-	tinsert(UISpecialFrames, "PuffiComboTrackerFrame")
-
 	self.frame = f
 	return f
 end
@@ -68,6 +84,8 @@ function Display:ApplyStyle()
 	local f = self.frame
 	if not f then return end
 
+	local always = PCT.db.alwaysShow and true or false
+
 	if PCT.db.plain then
 		f:SetBackdrop(nil)
 		f.title:Hide()
@@ -78,9 +96,11 @@ function Display:ApplyStyle()
 		f:SetBackdropColor(0, 0, 0, 0.55)
 		f:SetBackdropBorderColor(0.35, 0.35, 0.35, 0.9)
 		f.title:Show()
-		f.close:Show()
+		f.close:SetShown(not always)
 		f:EnableMouse(true)
 	end
+
+	SetEscapeClose(not always)
 end
 
 function Display:AcquireRow(index)

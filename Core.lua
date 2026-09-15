@@ -9,6 +9,7 @@ local defaults = {
 	initialized = false,
 	locked = false,
 	shown = true,
+	alwaysShow = false,
 	scale = 1,
 	iconSize = 32,
 	spacing = 4,
@@ -122,8 +123,23 @@ function PCT:TogglePlain()
 	self:Update()
 end
 
+-- Immer anzeigen: das Fenster lässt sich weder über /pct noch über den
+-- Schließen-Button oder ESC ausblenden und ist nach jedem Login sofort da.
+function PCT:ToggleAlwaysShow()
+	self.db.alwaysShow = not self.db.alwaysShow
+	if self.db.alwaysShow and self.Display and self.Display.frame then
+		self.Display.frame:Show()
+	end
+	self:Print(self.db.alwaysShow and "Fenster bleibt immer sichtbar." or "Fenster kann wieder ausgeblendet werden.")
+	self:Update()
+end
+
 function PCT:Toggle()
 	if not self.Display or not self.Display.frame then return end
+	if self.db.alwaysShow then
+		self:Print("Fenster ist auf \"immer anzeigen\" gestellt – zuerst /pct always.")
+		return
+	end
 	self.Display.frame:SetShown(not self.Display.frame:IsShown())
 end
 
@@ -153,7 +169,7 @@ loader:SetScript("OnEvent", function(_, event, arg1)
 		PCT.Display:Create()
 		PCT.Display:RestorePosition()
 		PCT.Display:Refresh()
-		PCT.Display.frame:SetShown(PCT.db.shown)
+		PCT.Display.frame:SetShown(PCT.db.alwaysShow or PCT.db.shown)
 	end
 end)
 
@@ -171,10 +187,12 @@ SlashCmdList.PUFFICOMBOTRACKER = function(input)
 		PCT:ToggleVertical()
 	elseif cmd == "plain" or cmd == "rahmen" then
 		PCT:TogglePlain()
+	elseif cmd == "always" or cmd == "immer" then
+		PCT:ToggleAlwaysShow()
 	elseif cmd == "reset" then
 		PCT:ResetPosition()
 	elseif cmd == "help" then
-		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct vertical (Anordnung), /pct plain (Rahmen an/aus), /pct reset (Position).")
+		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct vertical (Anordnung), /pct plain (Rahmen an/aus), /pct always (immer anzeigen), /pct reset (Position).")
 	else
 		PCT:Toggle()
 	end

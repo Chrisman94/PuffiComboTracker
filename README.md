@@ -16,6 +16,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 - Übersichtsfenster frei verschiebbar, sperrbar, Icon-Größe einstellbar
 - Anordnung waagerecht (Kombo als Zeile) oder senkrecht (Kombo als Spalte)
 - Modus "Nur Icons": ohne Fensterrahmen, Titel und Schließen-Button
+- Option "Immer anzeigen": das Fenster bleibt dauerhaft sichtbar
 - Nicht belegte Plätze werden im Anzeigefenster ausgeblendet
 - Einstellungen und Kombos werden pro Charakter gespeichert
 - Keine Abhängigkeiten (kein Ace3, keine Libs)
@@ -37,6 +38,7 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
 | `/pct lock` | Fenster sperren/entsperren |
 | `/pct vertical` | Zwischen waagerechter und senkrechter Anordnung wechseln |
 | `/pct plain` | Fensterrahmen aus-/einschalten (nur Icons) |
+| `/pct always` | Fenster dauerhaft sichtbar halten (an/aus) |
 | `/pct reset` | Fensterposition zurücksetzen |
 | `/pct help` | Befehlsübersicht |
 
@@ -51,6 +53,11 @@ Das Übersichtsfenster ist reines Anzeigefenster: es nimmt keine Zauber an, und
 nicht belegte Plätze werden dort gar nicht gezeichnet – eine Kombo mit fünf
 Plätzen und drei Zaubern ist also drei Icons lang. `/pct lock` verhindert
 lediglich das Verschieben des Fensters.
+
+Mit "Immer anzeigen" lässt sich das Übersichtsfenster nicht mehr versehentlich
+schließen: der Schließen-Button verschwindet, ESC und `/pct` blenden es nicht
+mehr aus, und nach dem Login ist es sofort wieder da. Zum Ausblenden die Option
+erst per Checkbox im Editor oder `/pct always` wieder abschalten.
 
 Im Modus "Nur Icons" verschwinden Rahmen, Hintergrund, Titel und Schließen-Button;
 übrig bleiben die Icons (und, falls eingeschaltet, die Kombonamen). Ist das

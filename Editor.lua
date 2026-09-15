@@ -33,7 +33,7 @@ function Editor:Create()
 	if self.frame then return self.frame end
 
 	local f = CreateFrame("Frame", "PuffiComboTrackerEditor", UIParent, "BasicFrameTemplateWithInset")
-	f:SetSize(460, 440)
+	f:SetSize(460, 466)
 	f:SetPoint("CENTER")
 	f:SetFrameStrata("DIALOG")
 	f:SetMovable(true)
@@ -68,6 +68,14 @@ function Editor:Create()
 		PCT:UpdateDisplay()
 	end)
 
+	self.alwaysCheck = CreateCheckbox(f, "Immer anzeigen", 12, -84, function(checked)
+		PCT.db.alwaysShow = checked
+		if checked and PCT.Display and PCT.Display.frame then
+			PCT.Display.frame:Show()
+		end
+		PCT:UpdateDisplay()
+	end)
+
 	local slider = CreateFrame("Slider", "PuffiComboTrackerSizeSlider", f, "OptionsSliderTemplate")
 	slider:SetWidth(120)
 	slider:SetPoint("TOPRIGHT", -24, -44)
@@ -92,18 +100,18 @@ function Editor:Create()
 
 	local addButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
 	addButton:SetSize(120, 22)
-	addButton:SetPoint("TOPLEFT", 14, -84)
+	addButton:SetPoint("TOPLEFT", 14, -110)
 	addButton:SetText("Neue Kombo")
 	addButton:SetScript("OnClick", function() PCT:AddCombo() end)
 
 	f.hint = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-	f.hint:SetPoint("TOPLEFT", 140, -88)
+	f.hint:SetPoint("TOPLEFT", 140, -114)
 	f.hint:SetWidth(300)
 	f.hint:SetJustifyH("LEFT")
 	f.hint:SetText("Zauber aus Zauberbuch oder Aktionsleiste auf einen Platz ziehen.\nRechtsklick leert einen Platz.")
 
 	local scroll = CreateFrame("ScrollFrame", "PuffiComboTrackerEditorScroll", f, "UIPanelScrollFrameTemplate")
-	scroll:SetPoint("TOPLEFT", 14, -118)
+	scroll:SetPoint("TOPLEFT", 14, -144)
 	scroll:SetPoint("BOTTOMRIGHT", -34, 14)
 
 	local child = CreateFrame("Frame", nil, scroll)
@@ -191,6 +199,7 @@ function Editor:Refresh()
 	self.labelCheck:SetChecked(db.showLabels)
 	self.verticalCheck:SetChecked(db.vertical)
 	self.plainCheck:SetChecked(db.plain)
+	self.alwaysCheck:SetChecked(db.alwaysShow)
 	self.sizeSlider:SetValue(db.iconSize)
 	if self.sizeSlider.valueText then
 		self.sizeSlider.valueText:SetText("Icon-Größe: " .. db.iconSize)
