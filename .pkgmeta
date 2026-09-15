@@ -1,0 +1,8 @@
+# Steuert das Zip, das CurseForge aus dem Repo baut.
+# Der Ordnername muss exakt "PuffiComboTracker" sein, sonst lädt WoW das Addon nicht.
+package-as: PuffiComboTracker
+
+ignore:
+  - README.md
+  - .pkgmeta
+  - .gitignore

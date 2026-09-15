@@ -29,6 +29,11 @@ schlägt nichts vor – es zeigt nur, was man sich als Kombo notiert hat.
    Wichtig: der Ordnername muss exakt `PuffiComboTracker` heißen.
 3. WoW neu starten bzw. `/reload`.
 
+Fertig gepackte Versionen kommen über CurseForge: dort baut der Packager bei
+jedem getaggten Commit automatisch ein Zip aus diesem Repo. Wer stattdessen
+direkt das Repo kopiert, sieht in der Addon-Liste als Version den Platzhalter
+`@project-version@` – der wird erst beim Packen durch den Tag-Namen ersetzt.
+
 ## Benutzung
 
 | Befehl | Wirkung |
