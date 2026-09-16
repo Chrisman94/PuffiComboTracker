@@ -84,10 +84,21 @@ Im Modus "Nur Icons" verschwinden Rahmen, Hintergrund, Titel und Schließen-Butt
 Fenster dabei gesperrt, nimmt die unsichtbare Fläche keine Mausklicks mehr an –
 zum Verschieben also erst `/pct lock`, und ausblenden dann über `/pct`.
 
+## Sprachen
+
+Die Oberfläche ist englisch; auf deutschen Clients (`deDE`) schaltet das Addon
+automatisch auf Deutsch um. Alle Texte stehen in `Locale.lua`: oben die
+englischen Standardwerte, darunter der `deDE`-Block, der sie überschreibt. Eine
+weitere Sprache ist ein Block nach demselben Muster.
+
+Die Slash-Befehle sind englisch, für die wichtigsten gibt es zusätzlich
+deutsche Aliase (`/pct senkrecht`, `/pct rahmen`, `/pct immer`, `/pct tasten`).
+
 ## Dateien
 
 | Datei | Inhalt |
 | --- | --- |
+| `Locale.lua` | Übersetzungen (englisch + deutsch) |
 | `Core.lua` | SavedVariables, Kombo-Verwaltung, Slash-Befehle |
 | `SlotButton.lua` | Icon-Platz als Widget, Cursor-/Zauber-Erkennung |
 | `Bindings.lua` | Tastenbelegung aus den Aktionsleisten auslesen |

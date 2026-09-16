@@ -1,4 +1,5 @@
 local ADDON, PCT = ...
+local L = PCT.L
 
 local Display = { rows = {} }
 PCT.Display = Display
@@ -216,8 +217,8 @@ function Display:Refresh()
 		f.hint:ClearAllPoints()
 		f.hint:SetPoint("TOPLEFT", f, "TOPLEFT", padding, -top)
 		f.hint:SetText(#db.combos == 0
-			and "Noch keine Kombo angelegt.\nRechtsklick oder /pct config zum Bearbeiten."
-			or "Kombo noch ohne Zauber.\nRechtsklick oder /pct config zum Bearbeiten.")
+			and L.DISPLAY_NO_COMBO
+			or L.DISPLAY_EMPTY_COMBO)
 		f.hint:Show()
 		f:SetSize(230, top + 40)
 	end

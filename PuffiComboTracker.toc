@@ -1,6 +1,7 @@
 ## Interface: 120100
 ## Title: Puffi Combo Tracker
-## Notes: Eigene Fähigkeiten-Kombos zusammenstellen und als kompakte Übersicht anzeigen.
+## Notes: Build your own ability combos and keep them on screen as a compact overview.
+## Notes-deDE: Eigene Fähigkeiten-Kombos zusammenstellen und als kompakte Übersicht anzeigen.
 ## Author: Chris
 ## Version: @project-version@
 ## SavedVariablesPerCharacter: PuffiComboTrackerDB
@@ -8,6 +9,7 @@
 ## AddonCompartmentFunc: PuffiComboTracker_OnAddonCompartmentClick
 ## X-Category: Combat
 
+Locale.lua
 Core.lua
 SlotButton.lua
 Bindings.lua

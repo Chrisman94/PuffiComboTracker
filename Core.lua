@@ -1,4 +1,5 @@
 local ADDON, PCT = ...
+local L = PCT.L
 
 PCT.addonName = ADDON
 PCT.title = "Puffi Combo Tracker"
@@ -43,7 +44,7 @@ end
 
 function PCT:AddCombo(name)
 	local combo = {
-		name = name or ("Kombo " .. (#self.db.combos + 1)),
+		name = name or (L.COMBO_PREFIX .. (#self.db.combos + 1)),
 		slots = 5,
 		spells = {},
 	}
@@ -108,19 +109,19 @@ end
 
 function PCT:ToggleLock()
 	self.db.locked = not self.db.locked
-	self:Print(self.db.locked and "Fenster gesperrt – nicht verschiebbar." or "Fenster entsperrt – verschiebbar.")
+	self:Print(self.db.locked and L.MSG_LOCKED or L.MSG_UNLOCKED)
 	self:Update()
 end
 
 function PCT:ToggleVertical()
 	self.db.vertical = not self.db.vertical
-	self:Print(self.db.vertical and "Senkrechte Anordnung." or "Waagerechte Anordnung.")
+	self:Print(self.db.vertical and L.MSG_VERTICAL or L.MSG_HORIZONTAL)
 	self:Update()
 end
 
 function PCT:TogglePlain()
 	self.db.plain = not self.db.plain
-	self:Print(self.db.plain and "Nur Icons, ohne Rahmen." or "Rahmen wieder eingeschaltet.")
+	self:Print(self.db.plain and L.MSG_PLAIN_ON or L.MSG_PLAIN_OFF)
 	self:Update()
 end
 
@@ -131,20 +132,20 @@ function PCT:ToggleAlwaysShow()
 	if self.db.alwaysShow and self.Display and self.Display.frame then
 		self.Display.frame:Show()
 	end
-	self:Print(self.db.alwaysShow and "Fenster bleibt immer sichtbar." or "Fenster kann wieder ausgeblendet werden.")
+	self:Print(self.db.alwaysShow and L.MSG_ALWAYS_ON or L.MSG_ALWAYS_OFF)
 	self:Update()
 end
 
 function PCT:ToggleBinds()
 	self.db.showBinds = not self.db.showBinds
-	self:Print(self.db.showBinds and "Tastenbelegung wird angezeigt." or "Tastenbelegung ausgeblendet.")
+	self:Print(self.db.showBinds and L.MSG_BINDS_ON or L.MSG_BINDS_OFF)
 	self:Update()
 end
 
 function PCT:Toggle()
 	if not self.Display or not self.Display.frame then return end
 	if self.db.alwaysShow then
-		self:Print("Fenster ist auf \"immer anzeigen\" gestellt – zuerst /pct always.")
+		self:Print(L.MSG_ALWAYS_BLOCKED)
 		return
 	end
 	self.Display.frame:SetShown(not self.Display.frame:IsShown())
@@ -156,7 +157,7 @@ function PCT:ResetPosition()
 	if self.Display then
 		self.Display:RestorePosition()
 	end
-	self:Print("Position zurückgesetzt.")
+	self:Print(L.MSG_POSITION_RESET)
 end
 
 -- Laden ----------------------------------------------------------------------
@@ -170,7 +171,7 @@ loader:SetScript("OnEvent", function(_, event, arg1)
 		PCT.db = PuffiComboTrackerDB
 		if not PCT.db.initialized then
 			PCT.db.initialized = true
-			PCT:AddCombo("Meine Kombo")
+			PCT:AddCombo(L.DEFAULT_COMBO_NAME)
 		end
 	elseif event == "PLAYER_LOGIN" then
 		PCT.Display:Create()
@@ -201,7 +202,7 @@ SlashCmdList.PUFFICOMBOTRACKER = function(input)
 	elseif cmd == "reset" then
 		PCT:ResetPosition()
 	elseif cmd == "help" then
-		PCT:Print("Befehle: /pct (Fenster an/aus), /pct config (Kombos bearbeiten), /pct lock (sperren/entsperren), /pct vertical (Anordnung), /pct plain (Rahmen an/aus), /pct always (immer anzeigen), /pct keys (Tastenbelegung), /pct reset (Position).")
+		PCT:Print(L.MSG_HELP)
 	else
 		PCT:Toggle()
 	end

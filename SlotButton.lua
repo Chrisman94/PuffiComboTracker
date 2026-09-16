@@ -1,4 +1,5 @@
 local ADDON, PCT = ...
+local L = PCT.L
 
 -- Zauber-Infos möglichst versionsunabhängig holen.
 function PCT.GetSpellData(spellID)
@@ -104,10 +105,10 @@ function PCT.CreateSlotButton(parent, editable)
 		if self.spellID then
 			GameTooltip:SetSpellByID(self.spellID)
 			if self.editable then
-				GameTooltip:AddLine("Rechtsklick: Platz leeren", 0.6, 0.6, 0.6)
+				GameTooltip:AddLine(L.TOOLTIP_CLEAR, 0.6, 0.6, 0.6)
 			end
 		else
-			GameTooltip:SetText("Zauber hierher ziehen", 1, 1, 1)
+			GameTooltip:SetText(L.TOOLTIP_DRAG, 1, 1, 1)
 		end
 		GameTooltip:Show()
 	end)

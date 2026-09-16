@@ -1,4 +1,5 @@
 local ADDON, PCT = ...
+local L = PCT.L
 
 local Editor = { entries = {} }
 PCT.Editor = Editor
@@ -48,27 +49,27 @@ function Editor:Create()
 	f.heading:SetPoint("TOP", 0, -5)
 	f.heading:SetText(PCT.title)
 
-	self.lockCheck = CreateCheckbox(f, "Fenster gesperrt", 12, -32, function(checked)
+	self.lockCheck = CreateCheckbox(f, L.CHECK_LOCKED, 12, -32, function(checked)
 		PCT.db.locked = checked
 		PCT:Update()
 	end)
 
-	self.labelCheck = CreateCheckbox(f, "Namen anzeigen", 170, -32, function(checked)
+	self.labelCheck = CreateCheckbox(f, L.CHECK_LABELS, 170, -32, function(checked)
 		PCT.db.showLabels = checked
 		PCT:UpdateDisplay()
 	end)
 
-	self.verticalCheck = CreateCheckbox(f, "Senkrecht anordnen", 12, -58, function(checked)
+	self.verticalCheck = CreateCheckbox(f, L.CHECK_VERTICAL, 12, -58, function(checked)
 		PCT.db.vertical = checked
 		PCT:UpdateDisplay()
 	end)
 
-	self.plainCheck = CreateCheckbox(f, "Nur Icons", 170, -58, function(checked)
+	self.plainCheck = CreateCheckbox(f, L.CHECK_PLAIN, 170, -58, function(checked)
 		PCT.db.plain = checked
 		PCT:UpdateDisplay()
 	end)
 
-	self.alwaysCheck = CreateCheckbox(f, "Immer anzeigen", 12, -84, function(checked)
+	self.alwaysCheck = CreateCheckbox(f, L.CHECK_ALWAYS, 12, -84, function(checked)
 		PCT.db.alwaysShow = checked
 		if checked and PCT.Display and PCT.Display.frame then
 			PCT.Display.frame:Show()
@@ -76,7 +77,7 @@ function Editor:Create()
 		PCT:UpdateDisplay()
 	end)
 
-	self.bindCheck = CreateCheckbox(f, "Tasten anzeigen", 170, -84, function(checked)
+	self.bindCheck = CreateCheckbox(f, L.CHECK_BINDS, 170, -84, function(checked)
 		PCT.db.showBinds = checked
 		PCT:UpdateDisplay()
 	end)
@@ -97,7 +98,7 @@ function Editor:Create()
 		if PCT.db.iconSize == size then return end
 		PCT.db.iconSize = size
 		if self.valueText then
-			self.valueText:SetText("Icon-Größe: " .. size)
+			self.valueText:SetText(L.ICON_SIZE .. size)
 		end
 		PCT:UpdateDisplay()
 	end)
@@ -106,14 +107,14 @@ function Editor:Create()
 	local addButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
 	addButton:SetSize(120, 22)
 	addButton:SetPoint("TOPLEFT", 14, -110)
-	addButton:SetText("Neue Kombo")
+	addButton:SetText(L.BUTTON_NEW_COMBO)
 	addButton:SetScript("OnClick", function() PCT:AddCombo() end)
 
 	f.hint = f:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
 	f.hint:SetPoint("TOPLEFT", 140, -114)
 	f.hint:SetWidth(300)
 	f.hint:SetJustifyH("LEFT")
-	f.hint:SetText("Zauber aus Zauberbuch oder Aktionsleiste auf einen Platz ziehen.\nRechtsklick leert einen Platz.")
+	f.hint:SetText(L.EDITOR_HINT)
 
 	local scroll = CreateFrame("ScrollFrame", "PuffiComboTrackerEditorScroll", f, "UIPanelScrollFrameTemplate")
 	scroll:SetPoint("TOPLEFT", 14, -144)
@@ -208,7 +209,7 @@ function Editor:Refresh()
 	self.bindCheck:SetChecked(db.showBinds)
 	self.sizeSlider:SetValue(db.iconSize)
 	if self.sizeSlider.valueText then
-		self.sizeSlider.valueText:SetText("Icon-Größe: " .. db.iconSize)
+		self.sizeSlider.valueText:SetText(L.ICON_SIZE .. db.iconSize)
 	end
 
 	local y = -ENTRY_GAP
@@ -221,7 +222,7 @@ function Editor:Refresh()
 		if not entry.nameBox:HasFocus() then
 			entry.nameBox:SetText(combo.name or "")
 		end
-		entry.countText:SetText(combo.slots .. (combo.slots == 1 and " Platz" or " Plätze"))
+		entry.countText:SetText(combo.slots .. (combo.slots == 1 and L.SLOT_SINGULAR or L.SLOT_PLURAL))
 		entry.minus:SetEnabled(combo.slots > PCT.MIN_SLOTS)
 		entry.plus:SetEnabled(combo.slots < PCT.MAX_SLOTS)
 		entry.up:SetEnabled(index > 1)
