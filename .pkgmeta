@@ -4,5 +4,6 @@ package-as: PuffiComboTracker
 
 ignore:
   - README.md
+  - CURSEFORGE.md
   - .pkgmeta
   - .gitignore
